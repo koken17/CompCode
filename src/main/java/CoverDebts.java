@@ -1,17 +1,18 @@
 import java.io.OutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.io.InputStreamReader;
 import java.util.*;
-import java.io.BufferedReader;
 import java.util.stream.Collectors;
 
-public class CoverDebts {
+public class CoverDebts extends FastInputUtil{
+    public CoverDebts(InputStream stream) {
+        super(stream);
+    }
+
     public static void main(String[] args) {
         InputStream inputStream = System.in;
         OutputStream outputStream = System.out;
-        InputReader in = new InputReader(inputStream);
+        FastInputUtil in = new FastInputUtil(inputStream);
         PrintWriter out = new PrintWriter(outputStream);
         TaskG solver = new TaskG();
         solver.solve(1, in, out);
@@ -19,7 +20,7 @@ public class CoverDebts {
     }
 
     static class TaskG {
-        public void solve(int testNumber, InputReader in, PrintWriter out) {
+        public void solve(int testNumber, FastInputUtil in, PrintWriter out) {
             int s = in.nextInt();
             List<Integer> debtList = Arrays.stream(in.nextLine().split("\\s+")).map(Integer::parseInt).collect(Collectors.toList());
             List<Integer> interestList = Arrays.stream(in.nextLine().split("\\s+")).map(Integer::parseInt).collect(Collectors.toList());
@@ -117,47 +118,5 @@ public class CoverDebts {
         public double getDebt() {
             return debt;
         }
-    }
-
-    static class InputReader {
-        public BufferedReader reader;
-        public StringTokenizer tokenizer;
-
-        public InputReader(InputStream stream) {
-            reader = new BufferedReader(new InputStreamReader(stream), 32768);
-            tokenizer = null;
-        }
-
-        public String next() {
-            while (tokenizer == null || !tokenizer.hasMoreTokens()) {
-                try {
-                    tokenizer = new StringTokenizer(reader.readLine());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            return tokenizer.nextToken();
-        }
-
-        public int nextInt() {
-            return Integer.parseInt(next());
-        }
-
-        public String nextLine() {
-            String str = "";
-            try {
-                if(tokenizer.hasMoreTokens()){
-                    str = tokenizer.nextToken("\n");
-                }
-                else{
-                    str = reader.readLine();
-                }
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-            return str;
-        }
-
     }
 }
